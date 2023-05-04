@@ -3,24 +3,24 @@ import { GrYoutube, GrInstagram, GrFacebook } from "react-icons/gr";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="border-t border-main mt-20 p-4">
       <div className="flex w-full">
         <div className="flex flex-col w-1/2">
           <div>고객센터</div>
-          <a>
+          <button>
             1234-1234 <span>09:00 ~ 18:00</span>
-          </a>
+          </button>
           <p>평일: 전체 문의 상담 가능</p>
           <p>주말, 공휴일: 이메일 문의 접수 가능</p>
           <button>카톡 상담</button>
           <button>이메일 문의</button>
         </div>
         <nav className="flex flex-col w-1/2">
-          <a href="">회사소개</a>
-          <a href="">이용약관</a>
-          <a href="">개인정보 처리방침</a>
-          <a href="">취소 및 환불 정책</a>
-          <a href="">고객의 소리</a>
+          <button>회사소개</button>
+          <button>이용약관</button>
+          <button>개인정보 처리방침</button>
+          <button>취소 및 환불 정책</button>
+          <button>고객의 소리</button>
         </nav>
       </div>
       <div className="flex flex-wrap">
@@ -44,15 +44,15 @@ export default function Footer() {
         </div>
       </div>
       <div className="flex">
-        <a href="">
+        <button>
           <GrYoutube />
-        </a>
-        <a href="">
+        </button>
+        <button>
           <GrInstagram />
-        </a>
-        <a href="">
+        </button>
+        <button>
           <GrFacebook />
-        </a>
+        </button>
       </div>
       <div>Copyright © Forest Of Furniture. All Rights Reserved.</div>
     </footer>

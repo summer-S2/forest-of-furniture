@@ -13,10 +13,12 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <NavBar />
         <ScrollRestoration />
-        <div className="mt-[57px]">
-          <Outlet />
+        <div className="flex flex-col justify-between">
+          <div className="mt-[57px]">
+            <Outlet />
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </QueryClientProvider>
     </AuthContextProvider>
   );
