@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-// import { v4 as uuid } from "uuid";
+import { v4 as uuid } from "uuid";
 import {
   getAuth,
   signInWithPopup,
@@ -84,7 +84,7 @@ async function adminUser(user) {
 /** 상품들 관리 */
 // 새 상품 추가
 export async function addNewProduct(product, imageUrl) {
-  const id = new Date();
+  const id = uuid();
   return set(ref(database, `products/${id}`), {
     ...product,
     id,

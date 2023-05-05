@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import useCart from "../hooks/useCart";
 import { useAuthContext } from "../context/AuthContext";
@@ -7,6 +7,7 @@ import { useAuthContext } from "../context/AuthContext";
 export default function ProductDetail() {
   const { user } = useAuthContext();
   const { addOrUpdateItem } = useCart();
+  const navigate = useNavigate();
   const {
     state: {
       product: { id, image, title, description, category, price, options },
@@ -16,8 +17,10 @@ export default function ProductDetail() {
   const [selected, setSelected] = useState(options && options[0]);
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = () => {
-    if (!user) {
-      alert("로그인이 필요합니다.");
+    if (!user && window.confirm(`로그인이 필요합니다.\r로그인하시겠습니까?`)) {
+      alert("로그인 페이지로 이동합니다.");
+      navigate("/login");
+    } else {
       return;
     }
     // 장바구니에 추가
@@ -66,10 +69,7 @@ export default function ProductDetail() {
                 ))}
             </select>
           </div>
-          <Button
-            text={success ? "추가중..." : "장바구니에 추가"}
-            onClick={handleClick}
-          />
+          <Button text={"장바구니에 추가"} onClick={handleClick} />
           {success && (
             <p className="rounded-xl py-1 px-4 mt-2 w-full text-center font-semibold text-main">
               {success}

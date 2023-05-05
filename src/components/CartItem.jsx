@@ -34,9 +34,9 @@ export default function CartItem({
     }
   };
   return (
-    <li className="flex justify-between my-2 items-center">
+    <li className="flex justify-between md:items-center py-3">
       <img className="w-24 md:w-48 rounded-lg" src={image} alt={title} />
-      <div className="flex-1 flex flex-col md:flex-row justify-between ml-4">
+      <div className="flex-1 flex flex-col md:flex-row md:justify-between ml-4">
         <div className="basis-3/5">
           <p className="text-lg">상품명: {title}</p>
           <p className="text-xl font-bold text-main ">옵션: {option}</p>

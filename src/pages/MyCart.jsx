@@ -21,7 +21,7 @@ export default function MyCart() {
     0
   );
   return (
-    <section className="p-8 flex flex-col">
+    <section className="px-2 py-4 md:p-8 flex flex-col">
       <p className="text-2xl text-center font-bold pb-4 border-b border-gray-300">
         내 장바구니
       </p>
@@ -30,7 +30,7 @@ export default function MyCart() {
       )}
       {hasProducts && (
         <>
-          <ul className="border-b border-gray-300 mb-8 p-4 px-8">
+          <ul className="border-b border-gray-300 mb-8 p-4 px-2 md:px-8">
             {products &&
               products.map((product) => (
                 <CartItem key={product.id} product={product} />
