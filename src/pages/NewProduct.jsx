@@ -20,7 +20,7 @@ export default function NewProduct() {
         addProduct.mutate(
           { product, url },
           {
-            onSuccess: () => {
+            onSuccess: (id) => {
               setSucess("성공적으로 제품이 추가되었습니다.");
               setTimeout(() => {
                 setSucess(null);
@@ -67,7 +67,7 @@ export default function NewProduct() {
         />
       )}
       {!file && (
-        <div className="flex flex-col justify-center w-96 h-[512px] mx-auto my-2 border-4 border-dashed border-main">
+        <div className="flex flex-col justify-center w-[320px] h-[480px]  md:w-[384px] md:h-[512px] mx-auto my-2 border-4 border-dashed border-main">
           <p>1080 X 720 ( 3 : 2 )</p>
           <p>또는</p>
           <p>1920 X 1080 ( 9 : 16 )</p>

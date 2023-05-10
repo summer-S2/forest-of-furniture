@@ -85,6 +85,7 @@ async function adminUser(user) {
 // 새 상품 추가
 export async function addNewProduct(product, imageUrl) {
   const id = uuid();
+
   return set(ref(database, `products/${id}`), {
     ...product,
     id,

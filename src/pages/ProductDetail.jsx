@@ -17,22 +17,32 @@ export default function ProductDetail() {
   const [selected, setSelected] = useState(options && options[0]);
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = () => {
+    if (user) {
+      // 장바구니에 추가
+      const product = {
+        id,
+        image,
+        title,
+        price,
+        option: selected,
+        quantity: 1,
+      };
+      addOrUpdateItem.mutate(product, {
+        onSuccess: () => {
+          setSuccess("장바구니에 추가되었습니다.");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 3000);
+        },
+      });
+    }
     if (!user && window.confirm(`로그인이 필요합니다.\r로그인하시겠습니까?`)) {
       alert("로그인 페이지로 이동합니다.");
       navigate("/login");
+      return;
     } else {
       return;
     }
-    // 장바구니에 추가
-    const product = { id, image, title, price, option: selected, quantity: 1 };
-    addOrUpdateItem.mutate(product, {
-      onSuccess: () => {
-        setSuccess("장바구니에 추가되었습니다.");
-        setTimeout(() => {
-          setSuccess(null);
-        }, 3000);
-      },
-    });
   };
   // console.log(selected);
   return (
