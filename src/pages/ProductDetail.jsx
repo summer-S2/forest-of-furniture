@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import useCart from "../hooks/useCart";
@@ -15,6 +15,7 @@ export default function ProductDetail() {
   } = useLocation();
   const [success, setSuccess] = useState();
   const [selected, setSelected] = useState(options && options[0]);
+  const [isAdmin, setIsAdmin] = useState(false);
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = () => {
     if (user) {
@@ -36,6 +37,7 @@ export default function ProductDetail() {
         },
       });
     }
+    // 로그인 유저가 없을 경우
     if (!user && window.confirm(`로그인이 필요합니다.\r로그인하시겠습니까?`)) {
       alert("로그인 페이지로 이동합니다.");
       navigate("/login");
@@ -44,10 +46,47 @@ export default function ProductDetail() {
       return;
     }
   };
-  // console.log(selected);
+  // console.log(user);
+
+  // 컴포넌트 마운트시 관리자유저 확인하여 수정버튼 활성화
+  // 유저 상태 변경되면 재확인
+  useEffect(() => {
+    if (user && user.isAdmin) {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  }, [user]);
+
   return (
     <>
-      <p className="mx-10 pt-4 text-lg text-main">카테고리: {category}</p>
+      <div className="flex justify-between items-center pt-2">
+        <p className="mx-10 text-xl font-bold text-main">
+          카테고리: {category}
+        </p>
+        {isAdmin && (
+          <div className="mx-10">
+            <Button
+              text="상품 내용 수정"
+              onClick={() =>
+                navigate("/products/update", {
+                  state: {
+                    product: {
+                      id,
+                      image,
+                      title,
+                      description,
+                      category,
+                      price,
+                      options,
+                    },
+                  },
+                })
+              }
+            />
+          </div>
+        )}
+      </div>
       <section className="flex flex-col md:flex-row p-4">
         <img
           className="w-full md:w-1/2 px-4 basis-7/12"

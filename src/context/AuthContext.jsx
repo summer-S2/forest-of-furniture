@@ -10,7 +10,7 @@ export function AuthContextProvider({ children }) {
     // app이 실행돼서 로그인한 사용자 세션이 남아있거나 사용자가 로그인했다면 user 객체를 전달, 로그아웃했다면 null 전달
     onUserStateChange((user) => {
       setUser(user);
-      console.log(user);
+      // console.log(user);
     });
   }, []);
 

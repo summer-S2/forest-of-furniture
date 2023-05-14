@@ -1,36 +1,82 @@
 import React, { useState } from "react";
-import Button from "../components/ui/Button";
-import { uploadImage } from "../api/uploader";
+import { useLocation } from "react-router-dom";
 import useProducts from "../hooks/useProducts";
+import { uploadImage } from "../api/uploader";
 import { GiCheckMark } from "react-icons/gi";
+import Button from "../components/ui/Button";
 
-export default function NewProduct() {
-  const [product, setProduct] = useState({});
+export default function UpdateProduct() {
+  const {
+    state: {
+      product: { id, image, title, description, category, price, options },
+    },
+  } = useLocation();
+  const [product, setProduct] = useState({
+    title,
+    description,
+    id,
+    category,
+    price,
+    options,
+  });
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSucess] = useState();
-  const { addProduct } = useProducts();
+  const { updateProduct } = useProducts();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // 수정사항 없을때
+    if (
+      !file &&
+      product.title === title &&
+      product.description === description &&
+      product.category === category &&
+      product.price === price &&
+      product.options === options
+    ) {
+      alert("변경된 내용이 없습니다.");
+      return;
+    }
+
     setIsUploading(true);
-    // 제품 사진을 Cloudinary에 업로드 하고 URL 획득
-    uploadImage(file) //
-      .then((url) => {
-        addProduct.mutate(
-          { product, url },
-          {
-            onSuccess: (id) => {
-              setSucess("성공적으로 제품이 추가되었습니다.");
-              setTimeout(() => {
-                setSucess(null);
-              }, 4000);
-            },
-          }
-        );
-      })
-      .finally(() => setIsUploading(false));
+    // 이미지 그대로
+    if (!file) {
+      updateProduct.mutate(
+        { id, product, url: image },
+        {
+          onSuccess: () => {
+            setSucess("성공적으로 제품이 변경되었습니다.");
+            setTimeout(() => {
+              setSucess(null);
+            }, 4000);
+          },
+        }
+      );
+    }
+
+    // 이미지 변경 제품 사진을 Cloudinary에 업로드 하고 URL 획득
+    if (file) {
+      uploadImage(file) //
+        .then((url) => {
+          updateProduct.mutate(
+            { product, url },
+            {
+              onSuccess: (id) => {
+                setSucess("성공적으로 제품이 변경되었습니다.");
+                setTimeout(() => {
+                  setSucess(null);
+                }, 4000);
+              },
+            }
+          );
+        });
+    }
+    setIsUploading(false);
   };
+
+  // input 내용 변경
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "file") {
@@ -39,7 +85,10 @@ export default function NewProduct() {
       return;
     }
     setProduct((product) => ({ ...product, [name]: value }));
+    console.log(product);
   };
+
+  // 내용 지우기
   const handleReset = () => {
     console.log(!file);
     if (window.confirm("입력한 내용을 삭제하시겠습니까?")) {
@@ -50,13 +99,14 @@ export default function NewProduct() {
       alert("취소되었습니다.");
     }
   };
+
   return (
     <section className="w-full text-center mb-10">
-      <h2 className="text-main text-2xl font-bold py-4">새로운 제품 등록</h2>
+      <h2 className="text-main text-2xl font-bold py-4">제품 내용 수정</h2>
       {success && (
         <div className="fixed flex items-center justify-center top-1/3 z-40 w-full max-w-screen-lg py-10 rounded-xl bg-main text-white my-2">
           <GiCheckMark className="text-white mr-2" />
-          <span>{success}</span>
+          <span>성공적으로 제품이 변경되었습니다.</span>
         </div>
       )}
       {file && (
@@ -67,12 +117,7 @@ export default function NewProduct() {
         />
       )}
       {!file && (
-        <div className="flex flex-col justify-center w-[320px] h-[480px]  md:w-[384px] md:h-[512px] mx-auto my-2 border-4 border-dashed border-main">
-          <p>1080 X 720 ( 3 : 2 )</p>
-          <p>또는</p>
-          <p>1920 X 1080 ( 9 : 16 )</p>
-          <p>파일의 사용을 권장합니다.</p>
-        </div>
+        <img className="w-96 mx-auto mb-2" src={image} alt="prev file" />
       )}
       <div className="w-full px-12">
         <button
@@ -93,7 +138,6 @@ export default function NewProduct() {
           type="file"
           accept="image/*"
           name="file"
-          required
           onChange={handleChange}
         />
         <input
@@ -138,7 +182,7 @@ export default function NewProduct() {
           onChange={handleChange}
         />
         <Button
-          text={isUploading ? "업로드중..." : "제품 등록하기"}
+          text={isUploading ? "업데이트중..." : "제품 내용 수정하기"}
           disabled={isUploading}
         />
       </form>

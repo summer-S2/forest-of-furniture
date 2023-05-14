@@ -106,6 +106,17 @@ export async function getProducts() {
   });
 }
 
+// 상품 내용 수정
+export async function updateToProduct(id, product, imageUrl) {
+  console.log(id, product, imageUrl);
+  return set(ref(database, `products/${id}`), {
+    ...product,
+    price: parseInt(product.price),
+    image: imageUrl,
+    options: product.options.split(","),
+  });
+}
+
 /** 쇼핑카드 관리 */
 // 사용자의 장바구니 목록 가져오기
 export async function getCart(userId) {

@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import UpdateProduct from "./pages/UpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute requireAdmin>
             <NewProduct />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/products/update",
+        element: (
+          <ProtectedRoute requireAdmin>
+            <UpdateProduct />
           </ProtectedRoute>
         ),
       },
