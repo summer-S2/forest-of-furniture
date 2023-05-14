@@ -61,7 +61,7 @@ export default function NewProduct() {
       )}
       {file && (
         <img
-          className="w-96 mx-auto mb-2"
+          className="w-[320px] h-[480px] md:w-[384px] md:h-[512px] mx-auto mb-2"
           src={URL.createObjectURL(file)}
           alt="local file"
         />
@@ -83,7 +83,7 @@ export default function NewProduct() {
           내용 지우기
         </button>
       </div>
-      <form className="flex flex-col px-12" onSubmit={handleSubmit}>
+      <form className="flex flex-col px-4 md:px-12" onSubmit={handleSubmit}>
         <label className="text-left cursor-pointer" htmlFor="image_uploads">
           {file ? file.name : "파일 선택"}
         </label>

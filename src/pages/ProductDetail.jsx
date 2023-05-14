@@ -61,13 +61,12 @@ export default function ProductDetail() {
   return (
     <>
       <div className="flex justify-between items-center pt-2">
-        <p className="mx-10 text-xl font-bold text-main">
-          카테고리: {category}
-        </p>
+        <p className="mx-8 text-xl font-bold text-main">카테고리: {category}</p>
         {isAdmin && (
-          <div className="mx-10">
+          <div className="mx-8">
             <Button
-              text="상품 내용 수정"
+              accent={true}
+              text="제품 내용 수정"
               onClick={() =>
                 navigate("/products/update", {
                   state: {
