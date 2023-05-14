@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useProducts from "../hooks/useProducts";
 import { uploadImage } from "../api/uploader";
 import { GiCheckMark } from "react-icons/gi";
@@ -17,11 +17,12 @@ export default function UpdateProduct() {
     id,
     category,
     price,
-    options,
+    options: options.join(","),
   });
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSucess] = useState();
+  const navigate = useNavigate();
   const { updateProduct } = useProducts();
 
   const handleSubmit = (e) => {
@@ -34,7 +35,7 @@ export default function UpdateProduct() {
       product.description === description &&
       product.category === category &&
       product.price === price &&
-      product.options === options
+      product.options === options.join(",")
     ) {
       alert("변경된 내용이 없습니다.");
       return;
@@ -47,7 +48,7 @@ export default function UpdateProduct() {
         { id, product, url: image },
         {
           onSuccess: () => {
-            setSucess("성공적으로 제품이 변경되었습니다.");
+            setSucess("성공적으로 제품 내용이 변경되었습니다.");
             setTimeout(() => {
               setSucess(null);
             }, 4000);
@@ -64,16 +65,20 @@ export default function UpdateProduct() {
             { product, url },
             {
               onSuccess: (id) => {
-                setSucess("성공적으로 제품이 변경되었습니다.");
+                setSucess("성공적으로 제품 내용이 변경되었습니다.");
                 setTimeout(() => {
                   setSucess(null);
-                }, 4000);
+                }, 3000);
               },
             }
           );
         });
     }
     setIsUploading(false);
+    setTimeout(() => {
+      // 변경 후 홈으로 이동 (수정된 데이터 반영)
+      navigate("/");
+    }, 4000);
   };
 
   // input 내용 변경
@@ -85,7 +90,7 @@ export default function UpdateProduct() {
       return;
     }
     setProduct((product) => ({ ...product, [name]: value }));
-    console.log(product);
+    // console.log(product);
   };
 
   // 내용 지우기
@@ -106,7 +111,7 @@ export default function UpdateProduct() {
       {success && (
         <div className="fixed flex items-center justify-center top-1/3 z-40 w-full max-w-screen-lg py-10 rounded-xl bg-main text-white my-2">
           <GiCheckMark className="text-white mr-2" />
-          <span>성공적으로 제품이 변경되었습니다.</span>
+          <span>성공적으로 제품 내용이 변경되었습니다.</span>
         </div>
       )}
       {file && (
