@@ -59,7 +59,7 @@ export default function ProductDetail() {
   }, [user]);
 
   return (
-    <>
+    <div className="animate-mount">
       <div className="flex justify-between items-center pt-2">
         <p className="mx-8 text-xl font-bold text-main">카테고리: {category}</p>
         {isAdmin && (
@@ -125,6 +125,6 @@ export default function ProductDetail() {
           )}
         </div>
       </section>
-    </>
+    </div>
   );
 }

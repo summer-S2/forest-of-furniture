@@ -21,7 +21,7 @@ export default function MyCart() {
     0
   );
   return (
-    <section className="px-2 py-4 md:p-8 flex flex-col">
+    <section className="px-2 py-4 md:p-8 flex flex-col animate-mount">
       <p className="text-2xl text-center font-bold pb-4 border-b border-gray-300">
         내 장바구니
       </p>

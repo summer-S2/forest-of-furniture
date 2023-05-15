@@ -106,7 +106,7 @@ export default function UpdateProduct() {
   };
 
   return (
-    <section className="w-full text-center mb-10">
+    <section className="w-full text-center mb-10 animate-mount">
       <h2 className="text-main text-2xl font-bold py-4">제품 내용 수정</h2>
       {success && (
         <div className="fixed flex items-center justify-center top-1/3 z-40 w-full max-w-screen-lg py-10 rounded-xl bg-main text-white my-2">

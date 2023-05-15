@@ -33,7 +33,7 @@ export default function Login() {
   };
 
   return (
-    <section className="max-w-lg mx-auto my-8  relative">
+    <section className="max-w-lg mx-auto my-8 relative animate-mount">
       <h1 className="pt-4 font-bold text-3xl text-main text-center">로그인</h1>
       <form className="flex flex-col p-6" onSubmit={handleLogin}>
         <div className="p-4">
